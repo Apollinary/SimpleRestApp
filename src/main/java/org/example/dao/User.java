@@ -23,15 +23,6 @@ public class User {
         this.lastName = lastName;
     }
 
-    public User(User user) {
-        this.firstName = user.getFirstName();
-        this.lastName = user.getLastName();
-        this.age = user.getAge();
-        this.email = user.getEmail();
-        this.phoneNumber = user.getPhoneNumber();
-        this.status = user.getStatus();
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
