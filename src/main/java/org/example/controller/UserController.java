@@ -2,16 +2,17 @@ package org.example.controller;
 
 
 import jakarta.validation.Valid;
-import org.example.dao.UserService;
 import org.example.dao.UserStatus;
 import org.example.dto.ResponseTransfer;
 import org.example.dto.User;
 import org.example.dto.rest.AddUserRequest;
 import org.example.dto.rest.AddUserResponse;
 import org.example.exceptions.UserNotFoundException;
+import org.example.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -47,6 +48,12 @@ public class UserController {
     @PostMapping(value = "/users/add", consumes = {"application/json"})
     public AddUserResponse addUser(@RequestBody @Valid AddUserRequest request) {
         return userService.addUser(request);
+    }
+
+    @GetMapping(value = "/users")
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
     }
 
 }

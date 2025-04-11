@@ -1,12 +1,16 @@
-package org.example.dao;
+package org.example.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.dao.UserStatus;
 import org.example.dto.User;
 import org.example.dto.rest.AddUserRequest;
 import org.example.dto.rest.AddUserResponse;
 import org.example.mapping.AddUserRequestToUserEntityMapper;
+import org.example.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 
 @Service("myUserService")
@@ -42,5 +46,9 @@ public class UserServiceImpl implements UserService {
         userToUpdate.setStatus(newStatus);
         userRepository.save(userToUpdate);
         return previousStatus;
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 }

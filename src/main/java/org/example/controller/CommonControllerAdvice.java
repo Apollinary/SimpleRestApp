@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 
 @ControllerAdvice
-public class UserControllerAdvice {
+public class CommonControllerAdvice {
 
     @ResponseBody
     @ExceptionHandler(MethodArgumentNotValidException.class)
