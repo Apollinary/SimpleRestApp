@@ -50,7 +50,7 @@ public class UserController {
         return userService.addUser(request);
     }
 
-    @GetMapping(value = "/users")
+    @GetMapping(value = "/users/all")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
