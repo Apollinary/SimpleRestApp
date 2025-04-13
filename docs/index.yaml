@@ -3,12 +3,12 @@ entries:
   simple-rest-chart:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-04-13T09:54:50.7127314+03:00"
+    created: "2025-04-13T10:14:05.2494975+03:00"
     description: A Helm chart for Kubernetes
-    digest: 9af72b0356e75863cf16829e58c0ced307c771f9d255ed94d4cc77069b9ee12d
+    digest: 792e06c9036d960640adf4b7bb329fd89d5b509e0559df00a7046010b2b4fe21
     name: simple-rest-chart
     type: application
     urls:
     - https://github.com/Apollinary/SimpleRestApp.git/simple-rest-chart-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-13T09:54:50.7111856+03:00"
+generated: "2025-04-13T10:14:05.2494975+03:00"
