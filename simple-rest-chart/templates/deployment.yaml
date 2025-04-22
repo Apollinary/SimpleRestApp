@@ -13,10 +13,8 @@ spec:
       {{- include "simple-rest-chart.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
       labels:
         {{- include "simple-rest-chart.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
@@ -39,6 +37,9 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          envFrom:
+          - configMapRef:
+              name: simple-rest-chart-cm
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
@@ -58,13 +59,14 @@ spec:
           {{- end }}
           {{- with .Values.volumeMounts }}
           volumeMounts:
-            {{- toYaml . | nindent 12 }}
+            - name: simple-rccm-volume
+              mountPath: /config
           {{- end }}
       {{- with .Values.volumes }}
       volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.nodeSelector }}
+        - name: simple-rccm-volume
+          configMap:
+            name: simple-rest-chart-cm
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}

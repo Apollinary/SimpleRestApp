@@ -12,11 +12,13 @@ public interface UserService {
 
     UserRepository getUserRepository();
 
-    User findById(long id);
+    User findById(Long id);
+
+    User findByIdCached(Long id);
 
     AddUserResponse addUser(AddUserRequest request);
 
-    UserStatus updateUserStatus(long userId, UserStatus newStatus);
+    UserStatus updateUserStatus(Long userId, UserStatus newStatus);
 
     List<User> getAllUsers();
 

@@ -3,13 +3,14 @@ package org.example.dto;
 import jakarta.persistence.*;
 import org.example.dao.UserStatus;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Serializable {
 
-    private long userId;
+    private Long userId;
     private String firstName;
     private String lastName;
     private int age;
@@ -28,7 +29,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    public long getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
