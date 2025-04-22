@@ -1,9 +1,11 @@
 package org.example.controller;
 
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.example.dto.Comment;
 import org.example.service.CommentServiceNPlus1;
 import org.example.service.CommentServiceNPlus1Solution;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +17,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/comments")
 public class CommentController {
+    @Value("${spring.data.redis.port}")
+    private String testProperty;
+
+    @PostConstruct
+    public void checkProperty() {
+        log.info("Загруженное значение свойства: " + testProperty);
+    }
+
     private final CommentServiceNPlus1 commentServiceNPlus1;
     private final CommentServiceNPlus1Solution serviceNPlus1Solution;
 

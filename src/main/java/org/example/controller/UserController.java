@@ -2,6 +2,7 @@ package org.example.controller;
 
 
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.example.dao.UserStatus;
 import org.example.dto.ResponseTransfer;
 import org.example.dto.User;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+@Slf4j
 @RestController
 public class UserController {
 
@@ -25,17 +27,17 @@ public class UserController {
     }
 
     @GetMapping(value = "/users/{userId}")
-    public User getUser(@PathVariable("userId") final long userId) {
-        User user = userService.findById(userId);
-        if (user.getUserId() == 0) {
-            throw new UserNotFoundException(String.valueOf(userId));
-        }
+    public User getUser(@PathVariable("userId") final Long userId) {
+        return userService.findById(userId);
+    }
 
-        return user;
+    @GetMapping(value = "/users/cached/{userId}")
+    public User getUserCached(@PathVariable("userId") final Long userId) {
+        return userService.findByIdCached(userId);
     }
 
     @PatchMapping(value = "/updateUser/{userId}/userStatus/{userStatus}")
-    public ResponseEntity<ResponseTransfer> updateUserStatus(@PathVariable("userId") final long userId,
+    public ResponseEntity<ResponseTransfer> updateUserStatus(@PathVariable("userId") final Long userId,
                                                              @PathVariable("userStatus") final UserStatus newUserStatus) {
         try {
             UserStatus previousUserStatus = userService.updateUserStatus(userId, newUserStatus);

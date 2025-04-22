@@ -1,0 +1,18 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: simple-rest-chart-cm
+  labels:
+    helm.sh/chart: {{ include "simple-rest-chart.chart" . }}
+data:
+  server.port: {{ .Values.server.port | default 8085 | quote }}
+  application.properties: |-
+    spring.datasource.url=jdbc:postgresql://{{ .Values.spring.datasource.host | default "postgresql-release" }}:{{ .Values.spring.datasource.port | default 5555 }}/{{ .Values.spring.datasource.name | default "postgres" }}
+    spring.datasource.username={{ .Values.spring.datasource.username }}
+    spring.datasource.password={{ .Values.spring.datasource.password }}
+    spring.data.redis.database={{ .Values.spring.data.redis.database | default 0 }}
+    spring.data.redis.host={{ .Values.spring.data.redis.host | default "redis-release-master" }}
+    spring.data.redis.password={{ .Values.spring.data.redis.password }}
+    spring.data.redis.port={{ .Values.spring.data.redis.port | default 6666 }}
+    spring.data.redis.timeout={{ .Values.spring.data.redis.timeout | default 60001 }}
+

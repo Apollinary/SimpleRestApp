@@ -41,7 +41,7 @@ public class UserControllerTest {
 
     @Test
     public void testGetMethod_whenCorrectUserRequest_thenCorrectResponse() {
-        controller = new UserController(service, userServiceNplus1);
+        controller = new UserController(service, objectMapper, userServiceNplus1, mapper);
         when(service.findById(USER_ID_1)).thenReturn(user1);
         assertEquals(ResponseEntity.ok(user1), controller.getUser(USER_ID_1));
     }
@@ -49,14 +49,14 @@ public class UserControllerTest {
 
     @Test(expected = UserNotFoundException.class)
     public void testGetMethod_whenIncorrectUserRequest_thenNotFoundResponse() {
-        controller = new UserController(service, userServiceNplus1);
+        controller = new UserController(service, objectMapper, userServiceNplus1, mapper);
         when(service.findById(USER_ID_1)).thenReturn(new User());
         controller.getUser(USER_ID_1);
     }
 
     @Test
     public void testPostMethod_whenCorrectUserGiven_thenUserIdReturned() {
-        controller = new UserController(service, userServiceNplus1);
+        controller = new UserController(service, objectMapper, userServiceNplus1, mapper);
         when(service.addUser(user1)).thenReturn(USER_ID_1);
         assertEquals(USER_ID_1, controller.addUser(user1));
 
@@ -70,7 +70,7 @@ public class UserControllerTest {
         transfer.setCurrentStatus(UserStatus.AWAY);
         transfer.setPreviousStatus(UserStatus.ONLINE);
 
-        controller = new UserController(service, userServiceNplus1);
+        controller = new UserController(service, objectMapper, userServiceNplus1, mapper);
         when(service.findById(user1.getUserId())).thenReturn(user1);
         when(service.updateUserStatus(user1.getUserId(), UserStatus.AWAY)).thenReturn(UserStatus.AWAY);
         assertEquals(ResponseEntity.ok(transfer), controller.updateUserStatus(user1.getUserId(), UserStatus.AWAY));
@@ -78,7 +78,7 @@ public class UserControllerTest {
 
     @Test(expected = UserNotFoundException.class)
     public void testPatchMethod_whenIncorrectUserIdGiven_thenInvalidUserFieldsResponse() {
-        controller = new UserController(service, userServiceNplus1);
+        controller = new UserController(service, objectMapper, userServiceNplus1, mapper);
         when(service.updateUserStatus(USER_ID_2, UserStatus.AWAY)).thenThrow(new NoSuchElementException());
         controller.updateUserStatus(USER_ID_2, UserStatus.AWAY);
     }
